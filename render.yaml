@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: sakuvest-app
+    env: php
+    plan: free
+    buildCommand: |
+      composer install --no-dev --optimize-autoloader
+      php artisan config:cache
+      php artisan route:cache
+      php artisan view:cache
+    startCommand: apache2-foreground
+    envVars:
+      # --- KONFIGURASI DATABASE DIRECT (NON-POOLER) ---
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        value: "db.ozpjiafflphxvhqhrsnf.supabase.co" # Ganti dengan Host Direct Anda
+      - key: DB_PORT
+        value: "5432" # Port wajib 5432 untuk non-pooler
+      - key: DB_DATABASE
+        value: "postgres"
+      - key: DB_USERNAME
+        value: "postgresql://postgres:uIp9NeSxSiLB6GpN@db.ozpjiafflphxvhqhrsnf.supabase.co:5432/postgres"
+      - key: DB_PASSWORD
+        value: "uIp9NeSxSiLB6GpN@"
+
+"
